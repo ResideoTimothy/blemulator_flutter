@@ -1,17 +1,11 @@
 part of blemulator;
 
-class SimulatedCharacteristic {
-  final String uuid;
+class SimulatedCharacteristic extends CharacteristicBase {
   final int id;
   SimulatedService service;
   Uint8List _value;
   final String convenienceName;
-  final bool isReadable;
-  final bool isWritableWithResponse;
-  final bool isWritableWithoutResponse;
-  final bool isNotifiable;
   bool isNotifying;
-  final bool isIndicatable;
   final Map<int, SimulatedDescriptor> _descriptors;
 
   StreamController<Uint8List> _streamController;
@@ -20,18 +14,24 @@ class SimulatedCharacteristic {
     @required String uuid,
     @required Uint8List value,
     this.convenienceName,
-    this.isReadable = true,
-    this.isWritableWithResponse = true,
-    this.isWritableWithoutResponse = true,
-    this.isNotifiable = false,
     this.isNotifying = false,
-    this.isIndicatable = false,
+    isReadable = true,
+    isWritableWithResponse = true,
+    isWritableWithoutResponse = true,
+    isNotifiable = false,
+    isIndicatable = false,
     List<SimulatedDescriptor> descriptors = const [],
-  })  : uuid = uuid.toLowerCase(),
-        id = IdGenerator().nextId(),
+  })  : id = IdGenerator().nextId(),
         _descriptors = {
           for (var descriptor in descriptors) descriptor.id: descriptor
-        } {
+        },
+        super(
+            uuid: uuid.toLowerCase(),
+            isIndicatable: isIndicatable,
+            isNotifiable: isNotifiable,
+            isReadable: isReadable,
+            isWritableWithResponse: isWritableWithResponse,
+            isWritableWithoutResponse: isWritableWithoutResponse) {
     _value = value;
     _descriptors.values
         .forEach((descriptor) => descriptor.attachToCharacteristic(this));

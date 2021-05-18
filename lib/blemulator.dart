@@ -15,6 +15,8 @@ import 'package:flutter_ble_lib/flutter_ble_lib.dart' as flutter_ble_lib;
 
 import 'src/internal.dart';
 
+part 'simulation/characteristic_base.dart';
+
 part 'simulated_ble_error.dart';
 
 part 'blemulator_core.dart';
