@@ -21,4 +21,10 @@ abstract class CharacteristicBase {
         isReadable = isReadable,
         isWritableWithResponse = isWritableWithResponse,
         isWritableWithoutResponse = isWritableWithoutResponse;
+
+  Future<Uint8List> read();
+
+  Future<void> write(Uint8List value, {bool sendNotification = true});
+
+  Stream<Uint8List> monitor();
 }

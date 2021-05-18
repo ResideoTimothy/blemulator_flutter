@@ -39,8 +39,10 @@ class SimulatedCharacteristic extends CharacteristicBase {
 
   void attachToService(SimulatedService service) => this.service = service;
 
+  @override
   Future<Uint8List> read() async => _value;
 
+  @override
   Future<void> write(Uint8List value, {bool sendNotification = true}) async {
     _value = value;
     if (sendNotification && _streamController?.hasListener == true) {
@@ -48,6 +50,7 @@ class SimulatedCharacteristic extends CharacteristicBase {
     }
   }
 
+  @override
   Stream<Uint8List> monitor() {
     _streamController ??= StreamController.broadcast(
       onListen: () {
